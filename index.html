@@ -7,6 +7,10 @@
 		<title>myVue</title>
 	</head>
 	<body>
-		<div id="app"></div>
+		<button id="mButton" type="button" style="margin-bottom: 30px;">点击我改变数据</button>
+		<div id="mvvm">
+			<input v-model="d" id="test">{{text}}
+			<div>{{d}}</div>
+		</div>
 	</body>
 </html>

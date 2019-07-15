@@ -1,6 +1,8 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const AutoDllPlugin = require('autodll-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -44,6 +46,18 @@ module.exports = {
 		new MiniCssExtractPlugin({
 		  filename: "css/[name].css",
 		  chunkFilename: "[id].css"
-		})
+		}),
+		new AutoDllPlugin({
+		  inject: true, // will inject the DLL bundle to index.html
+		  debug: true,
+		  filename: '[name]_[hash].js',
+		  path: './dll',
+		  entry: {
+		    vendor: []
+		  }
+		}),
+		new CopyPlugin([
+      { from: path.resolve(__dirname, '../src/mVue2.js'), to: path.resolve(__dirname, '../dist/js/mVue2.js')},
+    ])
   ]
 };

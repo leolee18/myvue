@@ -148,3 +148,41 @@ if (module.hot) {
   module.hot.accept();
 }
 ```
+#10. 第三方库单独打包
+```
+每次我们对项目进行打包时，我们都会把引用的第三方依赖给打包一遍，比如 Vue、Vue-Router、React 等等。但是这些库的代码基本都是不会变动的，我们没必要每次打包都构建一次，所以我们最好将这些第三方库提取出来单独打包，这样有利于减少打包时间。
+网上推荐 autodll-webpack-plugin
+首先安装：
+npm i autodll-webpack-plugin -D
+然后在 webpack.base.conf.js 中引入：
+const AutoDllPlugin = require('autodll-webpack-plugin');
+然后在 plugins 属性中添加这个插件：
+new AutoDllPlugin({
+  inject: true, // will inject the DLL bundle to index.html
+  debug: true,
+  filename: '[name]_[hash].js',
+  path: './dll',
+  entry: {
+    vendor: ['vue', 'vue-router', 'vuex']
+  }
+})
+
+```
+#11. 拷贝静态文件
+```
+首先安装：
+$ npm install copy-webpack-plugin --save-dev
+
+然后在 plugins 属性中添加这个插件：
+const CopyPlugin = require('copy-webpack-plugin');
+
+module.exports = {
+  plugins: [
+    new CopyPlugin([
+      { from: 'source', to: 'dest' },
+      { from: 'other', to: 'public' },
+    ]),
+  ],
+};
+
+```
