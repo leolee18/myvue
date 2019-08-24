@@ -9,8 +9,10 @@
 	<body>
 		<button id="mButton" type="button" style="margin-bottom: 30px;">点击我改变数据</button>
 		<div id="mvvm">
-			<input v-model="d" id="test">{{text}}
-			<div>{{d}}</div>
+			{{d}}
+			<span v-text="text"></span>
+			<input v-model="d" id="test">{{text}}{{text}}
+			<span > {{text}} </span><br>
 		</div>
 	</body>
 </html>
