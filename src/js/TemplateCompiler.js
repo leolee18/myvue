@@ -33,10 +33,15 @@ class TemplateCompiler{
 	
 	
 	/////////////////核心方法////////////////////////
-	nodeTofragment(node){
-		var fragment = document.createDocumentFragment(),child;
+	nodeTofragment(node,flag){
+		var fragment = flag || document.createDocumentFragment(),child;
 		
 		while(child = node.firstChild){
+			if(child.firstChild){
+				var chFrag = document.createDocumentFragment();
+				this.nodeTofragment(child,chFrag);
+				child.appendChild(chFrag);
+			}
 			fragment.appendChild(child);
 		}
 		return fragment;
@@ -46,7 +51,10 @@ class TemplateCompiler{
 		
 		this.toArray(childNodes).forEach((node)=>{
 			if(complier.isElementNode(node)){
-				complier.compileElement(node)
+				this.toArray(node.childNodes).forEach((chnode)=>{
+					complier.compile(chnode);
+				});
+				complier.compileElement(node);
 			}else{
 				var textReg = /\{\{(.+?)\}\}/g;
 				var expr = node.textContent;

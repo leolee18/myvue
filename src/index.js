@@ -29,3 +29,7 @@ var vm = new MinVue({
   }
 });
 
+var mButton = document.getElementById('mButton');
+mButton.addEventListener('click',function(e){
+	vm.$data.text = '我改变了，你看到了吗';
+}) 
