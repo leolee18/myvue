@@ -38,8 +38,7 @@ class TemplateCompiler{
 		
 		while(child = node.firstChild){
 			if(child.firstChild){
-				var chFrag = document.createDocumentFragment();
-				this.nodeTofragment(child,chFrag);
+				var chFrag = this.nodeTofragment(child);
 				child.appendChild(chFrag);
 			}
 			fragment.appendChild(child);
@@ -51,9 +50,9 @@ class TemplateCompiler{
 		
 		this.toArray(childNodes).forEach((node)=>{
 			if(complier.isElementNode(node)){
-				this.toArray(node.childNodes).forEach((chnode)=>{
-					complier.compile(chnode);
-				});
+				if(node.childNodes.length >0){
+					complier.compile(node);
+				}
 				complier.compileElement(node);
 			}else{
 				var textReg = /\{\{(.+?)\}\}/g;
@@ -77,7 +76,6 @@ class TemplateCompiler{
 				CompilerUtils[type](node,complier.vm,expr);
 			}
 		});
-		
 	}
 	compileText(node,expr){
 		CompilerUtils.text(node,this.vm,expr);
