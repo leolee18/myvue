@@ -6,11 +6,16 @@ const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
 	entry: {
+		mvue: [path.resolve(__dirname, '../src/js/Dep.js'),path.resolve(__dirname, '../src/js/Watcher.js'),path.resolve(__dirname, '../src/js/TemplateCompiler.js'),path.resolve(__dirname, '../src/js/Observer.js'),path.resolve(__dirname, '../src/js/MinVue.js')],
 		bundle: path.resolve(__dirname, '../src/index.js')
 	},
 	output: {
 		path: path.resolve(__dirname, '../dist'),
-		filename: 'js/[name].[hash].js'
+		filename: 'js/[name].[hash].js',
+		library: '[name]', // 指定类库名,主要用于直接引用的方式(比如使用script 标签)
+		libraryExport: "default", // 对外暴露default属性，就可以直接调用default里的属性
+		globalObject: 'this', // 定义全局变量,兼容node和浏览器运行，避免出现"window is not defined"的情况
+		libraryTarget: 'umd' // 定义打包方式Universal Module Definition,同时支持在CommonJS、AMD和全局变量使用
 	},
 	resolve: {},
 	module: {

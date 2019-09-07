@@ -21,6 +21,7 @@ mButton.addEventListener('click',function(e){
 
 ///////////////////////////////////////////////////////
 import MinVue from "./js/MinVue.js";
+// const MinVue = require('./js/mvue.1a6ae15ee91d68fd37c5.js');
 var vm = new MinVue({
   el:'#mvvm',
   data:{
